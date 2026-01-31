@@ -13,6 +13,12 @@
       "version": "1.0.0",
       "description": "Text input with custom validation",
       "files": ["index.js", "imara-input.js"]
+    },
+    {
+      "name": "container",
+      "version": "1.0.0",
+      "description": "Flexible conatiner",
+      "files": ["index.js", "imara-container.js"]
     }
   ]
 }
