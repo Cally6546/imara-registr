@@ -19,6 +19,12 @@
       "version": "1.0.0",
       "description": "Flexible conatiner",
       "files": ["index.js", "imara-container.js"]
+    },
+    {
+      "name": "texteria",
+      "version": "1.0.0",
+      "description": "Flexible texteria",
+      "files": ["index.js", "texteria.js"]
     }
   ]
 }

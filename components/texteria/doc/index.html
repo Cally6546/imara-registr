@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Texteria - Advanced TextArea Component Demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #1f2937;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+      color: white;
+    }
+
+    h1 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .demo-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .demo-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .demo-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #1f2937;
+    }
+
+    .demo-description {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .demo-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #2563eb;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .btn-secondary:hover {
+      background: #d1d5db;
+    }
+
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+
+    .output-panel {
+      background: #f9fafb;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 20px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 13px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .output-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #374151;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .output-content {
+      color: #6b7280;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .feature-list {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
+    }
+
+    .feature-list h2 {
+      font-size: 32px;
+      margin-bottom: 24px;
+      color: #1f2937;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: start;
+      gap: 12px;
+    }
+
+    .feature-icon {
+      width: 24px;
+      height: 24px;
+      background: #3b82f6;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .feature-text {
+      font-size: 14px;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    .code-section {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .code-section h2 {
+      font-size: 32px;
+      margin-bottom: 16px;
+      color: #1f2937;
+    }
+
+    .code-section p {
+      color: #6b7280;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    pre {
+      background: #1f2937;
+      color: #e5e7eb;
+      padding: 24px;
+      border-radius: 12px;
+      overflow-x: auto;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    code {
+      font-family: 'Monaco', 'Courier New', monospace;
+    }
+
+    @media (max-width: 768px) {
+      .demo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .feature-list,
+      .code-section {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎨 Texteria</h1>
+      <p class="subtitle">Production-Ready TextArea Web Component</p>
+    </header>
+
+    <!-- Feature Overview -->
+    <div class="feature-list">
+      <h2>✨ Features</h2>
+      <div class="features">
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div class="feature-text">Shadow DOM encapsulation for style isolation</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div class="feature-text">Reactive properties with attribute sync</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div class="feature-text">Live character counting with visual feedback</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div class="feature-text">Auto-resize based on content</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div class="feature-text">Pattern validation with custom messages</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div class="feature-text">Full ARIA support for accessibility</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div class="feature-text">Custom events for all interactions</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div class="feature-text">Themeable via CSS variables</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div class="feature-text">Dark mode support</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <div class="feature-text">Zero external dependencies</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Demos -->
+    <div class="demo-grid">
+      <!-- Basic Example -->
+      <div class="demo-card">
+        <h3 class="demo-title">Basic Usage</h3>
+        <p class="demo-description">Simple textarea with placeholder and character counter</p>
+        
+        <text-eria 
+          id="basic"
+          placeholder="Type your message here..."
+          rows="4"
+          show-counter>
+        </text-eria>
+
+        <div class="demo-actions">
+          <button class="btn-primary" onclick="logValue('basic')">Get Value</button>
+          <button class="btn-secondary" onclick="clearTextarea('basic')">Clear</button>
+        </div>
+
+        <div class="output-panel" id="basic-output">
+          <div class="output-title">Output:</div>
+          <div class="output-content">Click "Get Value" to see the content</div>
+        </div>
+      </div>
+
+      <!-- With Max Length -->
+      <div class="demo-card">
+        <h3 class="demo-title">Character Limit</h3>
+        <p class="demo-description">Maximum 200 characters with visual warning at 90%</p>
+        
+        <text-eria 
+          id="maxlength"
+          label="Your Review"
+          placeholder="Write a brief review..."
+          maxlength="200"
+          rows="4"
+          show-counter>
+        </text-eria>
+
+        <div class="demo-actions">
+          <button class="btn-primary" onclick="setLongText('maxlength')">Fill with Long Text</button>
+          <button class="btn-secondary" onclick="clearTextarea('maxlength')">Clear</button>
+        </div>
+      </div>
+
+      <!-- Auto-Resize -->
+      <div class="demo-card">
+        <h3 class="demo-title">Auto-Resize</h3>
+        <p class="demo-description">Automatically grows with content</p>
+        
+        <text-eria 
+          id="autoresize"
+          label="Your Story"
+          placeholder="Start typing and watch it grow..."
+          auto-resize
+          show-counter>
+        </text-eria>
+
+        <div class="demo-actions">
+          <button class="btn-primary" onclick="addParagraph('autoresize')">Add Paragraph</button>
+          <button class="btn-secondary" onclick="clearTextarea('autoresize')">Clear</button>
+        </div>
+      </div>
+
+      <!-- Required Field -->
+      <div class="demo-card">
+        <h3 class="demo-title">Required Field</h3>
+        <p class="demo-description">Validation with required attribute</p>
+        
+        <text-eria 
+          id="required"
+          label="Email Body"
+          placeholder="This field is required..."
+          required
+          minlength="10"
+          validation-message="Please enter at least 10 characters"
+          rows="4"
+          show-counter>
+        </text-eria>
+
+        <div class="demo-actions">
+          <button class="btn-primary" onclick="validateTextarea('required')">Validate</button>
+          <button class="btn-secondary" onclick="clearTextarea('required')">Clear</button>
+        </div>
+
+        <div class="output-panel" id="required-output">
+          <div class="output-title">Validation Status:</div>
+          <div class="output-content">Click "Validate" to check</div>
+        </div>
+      </div>
+
+      <!-- Pattern Validation -->
+      <div class="demo-card">
+        <h3 class="demo-title">Pattern Validation</h3>
+        <p class="demo-description">Only allows letters and spaces</p>
+        
+        <text-eria 
+          id="pattern"
+          label="Full Name"
+          placeholder="John Doe (letters only)"
+          pattern="^[A-Za-z\s]+$"
+          validation-message="Only letters and spaces allowed"
+          rows="3"
+          show-counter>
+        </text-eria>
+
+        <div class="demo-actions">
+          <button class="btn-primary" onclick="testPattern('pattern')">Test Invalid</button>
+          <button class="btn-secondary" onclick="clearTextarea('pattern')">Clear</button>
+        </div>
+      </div>
+
+      <!-- Disabled State -->
+      <div class="demo-card">
+        <h3 class="demo-title">Disabled State</h3>
+        <p class="demo-description">Non-interactive textarea</p>
+        
+        <text-eria 
+          id="disabled"
+          label="Read Only Content"
+          value="This textarea is disabled and cannot be edited."
+          disabled
+          rows="3">
+        </text-eria>
+
+        <div class="demo-actions">
+          <button class="btn-primary" onclick="toggleDisabled('disabled')">Toggle Disabled</button>
+        </div>
+      </div>
+
+      <!-- Event Handling -->
+      <div class="demo-card">
+        <h3 class="demo-title">Event Monitoring</h3>
+        <p class="demo-description">Real-time event tracking</p>
+        
+        <text-eria 
+          id="events"
+          placeholder="Type to see events..."
+          rows="4"
+          show-counter>
+        </text-eria>
+
+        <div class="output-panel" id="events-output">
+          <div class="output-title">Events Log:</div>
+          <div class="output-content" id="events-log">Waiting for events...</div>
+        </div>
+      </div>
+
+      <!-- Programmatic Control -->
+      <div class="demo-card">
+        <h3 class="demo-title">API Methods</h3>
+        <p class="demo-description">Control via JavaScript API</p>
+        
+        <text-eria 
+          id="api"
+          label="API Test Area"
+          placeholder="Use buttons to control..."
+          maxlength="100"
+          rows="4"
+          show-counter>
+        </text-eria>
+
+        <div class="demo-actions">
+          <button class="btn-primary" onclick="setValueAPI()">Set Value</button>
+          <button class="btn-secondary" onclick="getValueAPI()">Get Value</button>
+          <button class="btn-danger" onclick="clearAPI()">Clear</button>
+        </div>
+
+        <div class="output-panel" id="api-output">
+          <div class="output-title">API Response:</div>
+          <div class="output-content">Use the buttons above</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Usage Guide -->
+    <div class="code-section">
+      <h2>📖 Usage Guide</h2>
+      <p>Import and use Texteria in your project:</p>
+      
+      <pre><code>// 1. Import the component
+import './texteria.js';
+
+// 2. Use in HTML
+&lt;text-eria 
+  label="Message"
+  placeholder="Enter your message..."
+  maxlength="500"
+  required
+  auto-resize
+  show-counter&gt;
+&lt;/text-eria&gt;
+
+// 3. Access via JavaScript
+const textarea = document.querySelector('text-eria');
+
+// Get value
+const value = textarea.getValue();
+
+// Set value
+textarea.setValue('New content');
+
+// Clear
+textarea.clear();
+
+// Check validity
+const isValid = textarea.isValid();
+
+// Listen to events
+textarea.addEventListener('texteria-input', (e) => {
+  console.log('Value:', e.detail.value);
+  console.log('Characters:', e.detail.characterCount);
+});</code></pre>
+
+      <h2 style="margin-top: 40px;">⚙️ Available Attributes</h2>
+      <pre><code>value          - Initial/current value
+placeholder    - Placeholder text
+disabled       - Disable the textarea
+rows           - Number of visible rows
+cols           - Number of visible columns
+maxlength      - Maximum character limit
+minlength      - Minimum character requirement
+required       - Mark as required field
+auto-resize    - Enable auto-resizing
+pattern        - Regex pattern for validation
+label          - Label text
+name           - Form field name
+show-counter   - Display character counter
+validation-message - Custom validation message</code></pre>
+
+      <h2 style="margin-top: 40px;">🎨 CSS Customization</h2>
+      <pre><code>text-eria {
+  --texteria-font-family: 'Your Font', sans-serif;
+  --texteria-font-size: 16px;
+  --texteria-bg: #ffffff;
+  --texteria-border: #d1d5db;
+  --texteria-border-focus: #3b82f6;
+  --texteria-text: #1f2937;
+  --texteria-border-radius: 8px;
+  --texteria-padding: 12px 14px;
+  /* And many more variables... */
+}</code></pre>
+    </div>
+  </div>
+
+  <!-- Compile TypeScript to JavaScript -->
+  <script type="module">
+    // This would normally be your compiled texteria.js
+    // For this demo, we'll inline a simplified version
+    
+    class Texteria extends HTMLElement {
+      static get observedAttributes() {
+        return [
+          'value', 'placeholder', 'disabled', 'rows', 'cols', 'maxlength',
+          'minlength', 'required', 'auto-resize', 'pattern', 'label',
+          'name', 'validation-message', 'show-counter'
+        ];
+      }
+
+      constructor() {
+        super();
+        this.shadow = this.attachShadow({ mode: 'open' });
+        this._value = '';
+        this.isUserTyping = false;
+        this.initComponent();
+      }
+
+      initComponent() {
+        this.container = document.createElement('div');
+        this.container.className = 'texteria-container';
+        
+        this.textarea = document.createElement('textarea');
+        this.textarea.className = 'texteria-input';
+        
+        this.charCounter = document.createElement('span');
+        this.charCounter.className = 'texteria-counter';
+        
+        this.validationMessage = document.createElement('div');
+        this.validationMessage.className = 'texteria-validation';
+        
+        this.loadStyles();
+        this.assembleComponent();
+        this.bindEvents();
+      }
+
+      loadStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+          :host {
+            display: block;
+            --texteria-font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --texteria-font-size: 15px;
+            --texteria-line-height: 1.6;
+            --texteria-bg: #ffffff;
+            --texteria-bg-disabled: #f8f9fa;
+            --texteria-border: #d1d5db;
+            --texteria-border-hover: #9ca3af;
+            --texteria-border-focus: #3b82f6;
+            --texteria-text: #1f2937;
+            --texteria-text-disabled: #9ca3af;
+            --texteria-placeholder: #9ca3af;
+            --texteria-label-color: #374151;
+            --texteria-counter-color: #6b7280;
+            --texteria-counter-warning: #f59e0b;
+            --texteria-counter-error: #ef4444;
+            --texteria-validation-error: #ef4444;
+            --texteria-validation-bg: #fef2f2;
+            --texteria-border-radius: 8px;
+            --texteria-padding: 12px 14px;
+            --texteria-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --texteria-shadow-focus: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            --texteria-shadow-hover: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+          }
+          * { box-sizing: border-box; }
+          .texteria-container { position: relative; font-family: var(--texteria-font-family); }
+          .texteria-label {
+            display: block; font-size: 14px; font-weight: 500;
+            color: var(--texteria-label-color); margin-bottom: 6px;
+          }
+          .texteria-label.required::after { content: '*'; color: var(--texteria-validation-error); margin-left: 4px; }
+          .texteria-input {
+            width: 100%; font-family: var(--texteria-font-family);
+            font-size: var(--texteria-font-size); line-height: var(--texteria-line-height);
+            color: var(--texteria-text); background: var(--texteria-bg);
+            border: 2px solid var(--texteria-border); border-radius: var(--texteria-border-radius);
+            padding: var(--texteria-padding); resize: vertical;
+            transition: var(--texteria-transition); outline: none;
+          }
+          .texteria-input::placeholder { color: var(--texteria-placeholder); opacity: 1; }
+          .texteria-input:hover:not(:disabled):not(:focus) {
+            border-color: var(--texteria-border-hover); box-shadow: var(--texteria-shadow-hover);
+          }
+          .texteria-input:focus {
+            border-color: var(--texteria-border-focus); box-shadow: var(--texteria-shadow-focus);
+          }
+          .texteria-input:disabled {
+            background: var(--texteria-bg-disabled); color: var(--texteria-text-disabled);
+            cursor: not-allowed; opacity: 0.6;
+          }
+          .texteria-input.invalid { border-color: var(--texteria-validation-error); }
+          .texteria-input.invalid:focus { box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1); }
+          .texteria-container.auto-resize .texteria-input { resize: none; overflow: hidden; }
+          .texteria-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 6px; min-height: 20px;
+          }
+          .texteria-counter {
+            font-size: 13px; color: var(--texteria-counter-color);
+            font-weight: 500; margin-left: auto;
+          }
+          .texteria-counter.warning { color: var(--texteria-counter-warning); }
+          .texteria-counter.error { color: var(--texteria-counter-error); font-weight: 600; }
+          .texteria-validation {
+            font-size: 13px; color: var(--texteria-validation-error);
+            margin-top: 6px; padding: 8px 12px; background: var(--texteria-validation-bg);
+            border-radius: 6px; border-left: 3px solid var(--texteria-validation-error);
+            display: none;
+          }
+          .texteria-validation.visible { display: block; }
+          @media (prefers-color-scheme: dark) {
+            :host {
+              --texteria-bg: #1f2937; --texteria-bg-disabled: #111827;
+              --texteria-border: #374151; --texteria-border-hover: #4b5563;
+              --texteria-text: #f9fafb; --texteria-placeholder: #6b7280;
+              --texteria-label-color: #e5e7eb;
+            }
+          }
+        `;
+        this.shadow.appendChild(style);
+      }
+
+      assembleComponent() {
+        const footer = document.createElement('div');
+        footer.className = 'texteria-footer';
+        footer.appendChild(this.charCounter);
+        
+        this.container.appendChild(this.textarea);
+        this.container.appendChild(footer);
+        this.container.appendChild(this.validationMessage);
+        this.shadow.appendChild(this.container);
+      }
+
+      bindEvents() {
+        this.textarea.addEventListener('input', () => {
+          this.isUserTyping = true;
+          this._value = this.textarea.value;
+          this.setAttribute('value', this._value);
+          this.updateCharCounter();
+          this.updateValidation();
+          if (this.hasAttribute('auto-resize')) this.autoResize();
+          this.dispatchEvent(new CustomEvent('texteria-input', {
+            detail: { value: this._value, characterCount: this._value.length },
+            bubbles: true, composed: true
+          }));
+          this.isUserTyping = false;
+        });
+
+        this.textarea.addEventListener('change', () => {
+          this.dispatchEvent(new CustomEvent('texteria-change', {
+            detail: { value: this._value, characterCount: this._value.length },
+            bubbles: true, composed: true
+          }));
+        });
+
+        this.textarea.addEventListener('focus', () => {
+          this.dispatchEvent(new CustomEvent('texteria-focus', {
+            detail: { value: this._value, characterCount: this._value.length },
+            bubbles: true, composed: true
+          }));
+        });
+
+        this.textarea.addEventListener('blur', () => {
+          this.updateValidation();
+          this.dispatchEvent(new CustomEvent('texteria-blur', {
+            detail: { value: this._value, characterCount: this._value.length },
+            bubbles: true, composed: true
+          }));
+        });
+      }
+
+      connectedCallback() {
+        this.updateCharCounter();
+        this.updateValidation();
+        if (this.hasAttribute('auto-resize')) this.autoResize();
+      }
+
+      attributeChangedCallback(name, oldValue, newValue) {
+        if (oldValue === newValue) return;
+
+        switch (name) {
+          case 'value':
+            if (!this.isUserTyping) {
+              this._value = newValue || '';
+              this.textarea.value = this._value;
+              this.updateCharCounter();
+              this.updateValidation();
+              if (this.hasAttribute('auto-resize')) this.autoResize();
+            }
+            break;
+          case 'placeholder': this.textarea.placeholder = newValue || ''; break;
+          case 'disabled':
+            this.textarea.disabled = newValue !== null;
+            this.container.classList.toggle('disabled', newValue !== null);
+            break;
+          case 'rows': this.textarea.rows = parseInt(newValue || '3', 10); break;
+          case 'cols': this.textarea.cols = parseInt(newValue || '50', 10); break;
+          case 'maxlength':
+            if (newValue) this.textarea.maxLength = parseInt(newValue, 10);
+            else this.textarea.removeAttribute('maxlength');
+            this.updateCharCounter();
+            break;
+          case 'minlength':
+            if (newValue) this.textarea.minLength = parseInt(newValue, 10);
+            else this.textarea.removeAttribute('minlength');
+            break;
+          case 'required':
+            this.textarea.required = newValue !== null;
+            this.updateValidation();
+            break;
+          case 'auto-resize': if (newValue !== null) this.autoResize(); break;
+          case 'label': this.updateLabel(newValue); break;
+          case 'name': if (newValue) this.textarea.name = newValue; break;
+          case 'show-counter':
+            this.charCounter.style.display = newValue !== null ? 'block' : 'none';
+            break;
+        }
+      }
+
+      updateCharCounter() {
+        const currentLength = this._value.length;
+        const maxLength = this.textarea.maxLength;
+        
+        if (maxLength > 0) {
+          this.charCounter.textContent = `${currentLength} / ${maxLength}`;
+          const percentage = (currentLength / maxLength) * 100;
+          this.charCounter.classList.remove('warning', 'error');
+          if (percentage >= 100) this.charCounter.classList.add('error');
+          else if (percentage >= 90) this.charCounter.classList.add('warning');
+        } else {
+          this.charCounter.textContent = `${currentLength}`;
+        }
+      }
+
+      updateValidation() {
+        const pattern = this.getAttribute('pattern');
+        const validationMsg = this.getAttribute('validation-message');
+        let isValid = true;
+        let message = '';
+
+        if (this.textarea.required && !this._value.trim()) {
+          isValid = false;
+          message = validationMsg || 'This field is required';
+        } else if (this.textarea.minLength > 0 && this._value.length > 0 && this._value.length < this.textarea.minLength) {
+          isValid = false;
+          message = validationMsg || `Minimum ${this.textarea.minLength} characters required`;
+        } else if (pattern && this._value.length > 0) {
+          const regex = new RegExp(pattern);
+          if (!regex.test(this._value)) {
+            isValid = false;
+            message = validationMsg || 'Please match the required format';
+          }
+        }
+
+        this.textarea.classList.toggle('invalid', !isValid);
+        this.validationMessage.textContent = message;
+        this.validationMessage.classList.toggle('visible', !isValid && message.length > 0);
+      }
+
+      autoResize() {
+        this.container.classList.add('auto-resize');
+        this.textarea.style.height = 'auto';
+        const newHeight = Math.max(this.textarea.scrollHeight, 60);
+        this.textarea.style.height = `${newHeight}px`;
+      }
+
+      updateLabel(text) {
+        if (text) {
+          if (!this.label) {
+            this.label = document.createElement('label');
+            this.label.className = 'texteria-label';
+            this.container.insertBefore(this.label, this.textarea);
+          }
+          this.label.textContent = text;
+          this.label.classList.toggle('required', this.textarea.required);
+        } else if (this.label) {
+          this.label.remove();
+          this.label = null;
+        }
+      }
+
+      getValue() { return this._value; }
+      setValue(value) {
+        this._value = value;
+        this.textarea.value = value;
+        this.setAttribute('value', value);
+        this.updateCharCounter();
+        this.updateValidation();
+        if (this.hasAttribute('auto-resize')) this.autoResize();
+      }
+      clear() { this.setValue(''); }
+      focus() { this.textarea.focus(); }
+      blur() { this.textarea.blur(); }
+      isValid() { return !this.textarea.classList.contains('invalid'); }
+      getCharacterCount() { return this._value.length; }
+      getRemainingCharacters() {
+        return this.textarea.maxLength > 0 ? this.textarea.maxLength - this._value.length : -1;
+      }
+    }
+
+    customElements.define('text-eria', Texteria);
+  </script>
+
+  <!-- Demo Helper Functions -->
+  <script>
+    function logValue(id) {
+      const textarea = document.getElementById(id);
+      const output = document.getElementById(id + '-output');
+      if (output) {
+        const value = textarea.getValue();
+        output.querySelector('.output-content').textContent = 
+          value || '(empty)';
+      }
+    }
+
+    function clearTextarea(id) {
+      document.getElementById(id).clear();
+    }
+
+    function setLongText(id) {
+      const longText = "This is a long text that will demonstrate the character limit feature. As you approach the maximum character count, you'll see the counter change color to warn you. This text is designed to be close to but not exceed the 200 character limit set for this particular textarea component.";
+      document.getElementById(id).setValue(longText.substring(0, 200));
+    }
+
+    function addParagraph(id) {
+      const textarea = document.getElementById(id);
+      const currentValue = textarea.getValue();
+      const newParagraph = "\n\nThis is a new paragraph that has been added to demonstrate the auto-resize feature. Watch how the textarea grows to accommodate the new content!";
+      textarea.setValue(currentValue + newParagraph);
+    }
+
+    function validateTextarea(id) {
+      const textarea = document.getElementById(id);
+      const output = document.getElementById(id + '-output');
+      const isValid = textarea.isValid();
+      const value = textarea.getValue();
+      
+      if (output) {
+        output.querySelector('.output-content').textContent = 
+          `Valid: ${isValid}\nLength: ${value.length} characters\nValue: ${value || '(empty)'}`;
+      }
+    }
+
+    function testPattern(id) {
+      document.getElementById(id).setValue('Test123!@#');
+    }
+
+    function toggleDisabled(id) {
+      const textarea = document.getElementById(id);
+      if (textarea.hasAttribute('disabled')) {
+        textarea.removeAttribute('disabled');
+      } else {
+        textarea.setAttribute('disabled', '');
+      }
+    }
+
+    function setValueAPI() {
+      const textarea = document.getElementById('api');
+      textarea.setValue('This value was set using the setValue() API method!');
+      
+      const output = document.getElementById('api-output');
+      output.querySelector('.output-content').textContent = 'Value set successfully!';
+    }
+
+    function getValueAPI() {
+      const textarea = document.getElementById('api');
+      const value = textarea.getValue();
+      const count = textarea.getCharacterCount();
+      const remaining = textarea.getRemainingCharacters();
+      
+      const output = document.getElementById('api-output');
+      output.querySelector('.output-content').textContent = 
+        `Value: "${value}"\nCharacters: ${count}\nRemaining: ${remaining >= 0 ? remaining : 'unlimited'}`;
+    }
+
+    function clearAPI() {
+      const textarea = document.getElementById('api');
+      textarea.clear();
+      
+      const output = document.getElementById('api-output');
+      output.querySelector('.output-content').textContent = 'Textarea cleared!';
+    }
+
+    // Event monitoring
+    const eventsTextarea = document.getElementById('events');
+    const eventsLog = document.getElementById('events-log');
+    let eventCount = 0;
+
+    ['texteria-input', 'texteria-change', 'texteria-focus', 'texteria-blur'].forEach(eventName => {
+      eventsTextarea.addEventListener(eventName, (e) => {
+        eventCount++;
+        const time = new Date().toLocaleTimeString();
+        const logEntry = `[${time}] ${eventName}: "${e.detail.value.substring(0, 30)}${e.detail.value.length > 30 ? '...' : ''}" (${e.detail.characterCount} chars)`;
+        
+        const logs = eventsLog.textContent === 'Waiting for events...' ? [] : eventsLog.textContent.split('\n');
+        logs.unshift(logEntry);
+        if (logs.length > 5) logs.pop();
+        eventsLog.textContent = logs.join('\n');
+      });
+    });
+  </script>
+</body>
+</html>
