@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Input Component Demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      padding: 40px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      color: #1f2937;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      margin-bottom: 40px;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section h2 {
+      margin-bottom: 20px;
+      color: #374151;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 10px;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+
+    .demo-box {
+      background: #f9fafb;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .code {
+      background: #1f2937;
+      color: #e5e7eb;
+      padding: 16px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      color: #6b7280;
+    }
+
+    button:hover {
+      color: #374151;
+    }
+
+    .output {
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 13px;
+    }
+
+    /* Custom theme example */
+    .dark-input {
+      --input-bg: #1f2937;
+      --input-border-color: #374151;
+      --input-text-color: #f9fafb;
+      --input-label-color: #e5e7eb;
+      --input-placeholder-color: #6b7280;
+    }
+
+    .success-input {
+      --input-border-color-focus: #10b981;
+      --input-focus-ring: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+
+    .large-input {
+      --input-padding: 14px 16px;
+      --input-font-size: 16px;
+      --input-border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📝 App Input Component</h1>
+    <p class="subtitle">A production-ready Web Component built with TypeScript and Shadow DOM</p>
+
+    <!-- Basic Inputs Section -->
+    <div class="section">
+      <h2>Basic Input Types</h2>
+      <div class="demo-grid">
+        <app-input 
+          label="Text Input" 
+          type="text"
+          placeholder="Enter text..."
+        ></app-input>
+
+        <app-input 
+          label="Email" 
+          type="email"
+          placeholder="you@example.com"
+        ></app-input>
+
+        <app-input 
+          label="Password" 
+          type="password"
+          placeholder="Enter password"
+        ></app-input>
+
+        <app-input 
+          label="Number" 
+          type="number"
+          placeholder="123"
+        ></app-input>
+
+        <app-input 
+          label="Search" 
+          type="search"
+          placeholder="Search..."
+        ></app-input>
+      </div>
+    </div>
+
+    <!-- States Section -->
+    <div class="section">
+      <h2>States</h2>
+      <div class="demo-grid">
+        <app-input 
+          label="Normal State" 
+          placeholder="Type something..."
+        ></app-input>
+
+        <app-input 
+          label="Required Field" 
+          placeholder="This is required"
+          required
+        ></app-input>
+
+        <app-input 
+          label="Disabled" 
+          value="Cannot edit"
+          disabled
+        ></app-input>
+
+        <app-input 
+          label="Read-only" 
+          value="Read only value"
+          readonly
+        ></app-input>
+
+        <app-input 
+          label="Error State" 
+          value="invalid@"
+          error
+        >
+          <span slot="">Please enter a valid email</span>
+        </app-input>
+
+        <app-input 
+          label="With Helper Text" 
+          placeholder="Username"
+        >
+          <span slot="">Choose a unique username</span>
+        </app-input>
+      </div>
+    </div>
+
+    <!-- Slots - Prefix & Suffix -->
+    <div class="section">
+      <h2>Prefix & Suffix Slots</h2>
+      <div class="demo-grid">
+        <app-input 
+          label="Search" 
+          type="search"
+          placeholder="Search items..."
+        >
+          <svg slot="prefix" class="icon" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+        </app-input>
+
+        <app-input 
+          label="Website URL" 
+          placeholder="example.com"
+        >
+          <span slot="prefix">https://</span>
+        </app-input>
+
+        <app-input 
+          label="Password" 
+          type="password"
+          id="password-toggle"
+          placeholder="Enter password"
+        >
+          <button slot="suffix" type="button" id="toggle-btn">
+            <svg class="icon" viewBox="0 0 16 16">
+              <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+              <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+            </svg>
+          </button>
+        </app-input>
+
+        <app-input 
+          label="Price" 
+          type="number"
+          value="99"
+        >
+          <span slot="prefix">$</span>
+          <span slot="suffix">USD</span>
+        </app-input>
+
+        <app-input 
+          label="Width" 
+          type="number"
+          value="1920"
+        >
+          <span slot="suffix">px</span>
+        </app-input>
+      </div>
+    </div>
+
+    <!-- Custom Theming -->
+    <div class="section">
+      <h2>Custom Theming</h2>
+      <div class="demo-grid">
+        <app-input 
+          class="success-input"
+          label="Success Theme" 
+          placeholder="Green focus color"
+        ></app-input>
+
+        <app-input 
+          class="large-input"
+          label="Large Input" 
+          placeholder="Bigger padding & font"
+        ></app-input>
+      </div>
+    </div>
+
+    <!-- Interactive Demo -->
+    <div class="section">
+      <h2>Interactive Examples</h2>
+      
+      <!-- Real-time Validation -->
+      <div class="demo-box" style="margin-bottom: 20px;">
+        <h3 style="margin-bottom: 16px; color: #374151;">Email Validation</h3>
+        <app-input 
+          id="email-validation"
+          label="Email Address" 
+          type="email"
+          placeholder="you@example.com"
+        >
+          <span slot="" id="email-error"></span>
+        </app-input>
+      </div>
+
+      <!-- Password Strength -->
+      <div class="demo-box" style="margin-bottom: 20px;">
+        <h3 style="margin-bottom: 16px; color: #374151;">Password Strength Indicator</h3>
+        <app-input 
+          id="password-strength"
+          label="Create Password" 
+          type="password"
+          placeholder="Enter a strong password"
+        >
+          <span slot="" id="strength-text"></span>
+        </app-input>
+      </div>
+
+      <!-- Character Counter -->
+      <div class="demo-box">
+        <h3 style="margin-bottom: 16px; color: #374151;">Character Counter</h3>
+        <app-input 
+          id="char-counter"
+          label="Username (max 20 chars)" 
+          placeholder="Enter username"
+        >
+          <span slot="" id="char-count">0 / 20</span>
+        </app-input>
+      </div>
+    </div>
+
+    <!-- Form Integration -->
+    <div class="section">
+      <h2>Form Integration</h2>
+      <div class="demo-box">
+        <form id="demo-form">
+          <div style="display: grid; gap: 16px; margin-bottom: 20px;">
+            <app-input 
+              name="username"
+              label="Username" 
+              placeholder="Choose a username"
+              required
+            >
+              <span slot="">At least 3 characters</span>
+            </app-input>
+
+            <app-input 
+              name="email"
+              label="Email" 
+              type="email"
+              placeholder="you@example.com"
+              required
+            ></app-input>
+
+            <app-input 
+              name="password"
+              label="Password" 
+              type="password"
+              placeholder="Create a password"
+              required
+            >
+              <span slot="">At least 8 characters</span>
+            </app-input>
+
+            <app-input 
+              name="website"
+              label="Website (optional)" 
+              type="text"
+              placeholder="example.com"
+            >
+              <span slot="prefix">https://</span>
+            </app-input>
+          </div>
+
+          <button 
+            type="submit" 
+            style="
+              background: #2563eb;
+              color: white;
+              padding: 10px 20px;
+              border-radius: 6px;
+              font-weight: 500;
+              cursor: pointer;
+            "
+          >
+            Submit Form
+          </button>
+        </form>
+
+        <div id="form-output" class="output" style="margin-top: 16px;">
+          Fill the form and submit...
+        </div>
+      </div>
+    </div>
+
+    <!-- Event Monitoring -->
+    <div class="section">
+      <h2>Event Monitoring</h2>
+      <div class="demo-box">
+        <app-input 
+          id="event-input"
+          label="Type to see events" 
+          placeholder="Start typing..."
+        ></app-input>
+        
+        <div id="event-output" class="output" style="margin-top: 16px;">
+          Events will appear here...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Import the component as a module -->
+  <script type="module">
+    // Import the component from the dist folder
+    import { AppInput } from './dist/app-input.js';
+
+    // Password toggle functionality
+    const passwordInput = document.getElementById('password-toggle');
+    const toggleBtn = document.getElementById('toggle-btn');
+    
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        const currentType = passwordInput.getAttribute('type');
+        passwordInput.setAttribute('type', currentType === 'password' ? 'text' : 'password');
+      });
+    }
+
+    // Email validation
+    const emailInput = document.getElementById('email-validation');
+    const emailError = document.getElementById('email-error');
+    
+    emailInput.addEventListener('input', (e) => {
+      const email = e.detail.value;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (email && !emailRegex.test(email)) {
+        emailInput.setAttribute('error', '');
+        emailError.textContent = '❌ Please enter a valid email address';
+        emailError.style.color = 'var(--input-error-color)';
+      } else if (email) {
+        emailInput.removeAttribute('error');
+        emailError.textContent = '✅ Valid email address';
+        emailError.style.color = '#10b981';
+      } else {
+        emailInput.removeAttribute('error');
+        emailError.textContent = '';
+      }
+    });
+
+    // Password strength indicator
+    const passwordStrength = document.getElementById('password-strength');
+    const strengthText = document.getElementById('strength-text');
+    
+    passwordStrength.addEventListener('input', (e) => {
+      const pwd = e.detail.value;
+      let score = 0;
+      
+      if (pwd.length >= 8) score++;
+      if (/[a-z]/.test(pwd)) score++;
+      if (/[A-Z]/.test(pwd)) score++;
+      if (/[0-9]/.test(pwd)) score++;
+      if (/[^a-zA-Z0-9]/.test(pwd)) score++;
+      
+      const levels = [
+        { text: 'Very Weak', color: '#dc2626' },
+        { text: 'Weak', color: '#ea580c' },
+        { text: 'Fair', color: '#f59e0b' },
+        { text: 'Good', color: '#84cc16' },
+        { text: 'Strong', color: '#10b981' },
+        { text: 'Very Strong', color: '#059669' }
+      ];
+      
+      if (pwd) {
+        const level = levels[score] || levels[0];
+        strengthText.textContent = `Strength: ${level.text}`;
+        strengthText.style.color = level.color;
+      } else {
+        strengthText.textContent = '';
+      }
+    });
+
+    // Character counter
+    const charCounter = document.getElementById('char-counter');
+    const charCount = document.getElementById('char-count');
+    const maxChars = 20;
+    
+    charCounter.addEventListener('input', (e) => {
+      const length = e.detail.value.length;
+      charCount.textContent = `${length} / ${maxChars}`;
+      
+      if (length > maxChars) {
+        charCounter.setAttribute('error', '');
+        charCount.style.color = 'var(--input-error-color)';
+      } else {
+        charCounter.removeAttribute('error');
+        charCount.style.color = 'var(--input-helper-color)';
+      }
+    });
+
+    // Form handling
+    const form = document.getElementById('demo-form');
+    const formOutput = document.getElementById('form-output');
+    
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const data = {};
+      
+      for (let [key, value] of formData.entries()) {
+        data[key] = value;
+      }
+      
+      formOutput.innerHTML = `
+        <strong>Form Submitted!</strong><br><br>
+        <strong>Username:</strong> ${data.username || 'N/A'}<br>
+        <strong>Email:</strong> ${data.email || 'N/A'}<br>
+        <strong>Password:</strong> ${'*'.repeat(data.password?.length || 0)}<br>
+        <strong>Website:</strong> ${data.website || 'N/A'}
+      `;
+    });
+
+    // Event monitoring
+    const eventInput = document.getElementById('event-input');
+    const eventOutput = document.getElementById('event-output');
+    let eventCount = 0;
+    
+    ['input', 'change', 'focus', 'blur'].forEach(eventType => {
+      eventInput.addEventListener(eventType, (e) => {
+        eventCount++;
+        const timestamp = new Date().toLocaleTimeString();
+        
+        eventOutput.innerHTML = `
+          <strong>[${timestamp}] Event #${eventCount}: ${eventType}</strong><br>
+          Value: "${e.detail?.value || 'N/A'}"<br>
+          ${e.detail?.inputType ? `Input Type: ${e.detail.inputType}` : ''}
+        `;
+      });
+    });
+  </script>
+</body>
+</html>

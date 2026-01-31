@@ -1,0 +1,18 @@
+{
+  "name": "imara-ui",
+  "version": "0.1.7",
+  "components": [
+    {
+      "name": "button",
+      "version": "1.0.0",
+      "description": "High-performance primary button",
+      "files": ["index.js", "app-button.js"]
+    },
+    {
+      "name": "input",
+      "version": "1.0.0",
+      "description": "Text input with custom validation",
+      "files": ["index.js", "app-input.js"]
+    }
+  ]
+}

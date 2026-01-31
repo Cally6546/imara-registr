@@ -1,0 +1,10 @@
+# Ignore all development source files
+**/src/
+**/*.ts
+**/*.map
+node_modules/
+.env
+.tsconfig.json
+
+# Keep the dist folders!
+!**/dist/

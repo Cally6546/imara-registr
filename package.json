@@ -1,0 +1,7 @@
+{
+  "name": "imara-registry",
+  "scripts": {
+    "build:all": "find components -name 'package.json' -execdir npm run build \";\"",
+    "test:all": "find components -name 'package.json' -execdir npm test \";\""
+  }
+}
